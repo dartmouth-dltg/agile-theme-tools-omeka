@@ -1,0 +1,47 @@
+<div id="block-<?php echo $this->blockId; ?>" class="region <?php echo $this->regionClass; ?> data-target-region-id="<?php echo $this->targetID; ?>">
+    <?php if ($title): ?>
+        <h2><?php echo $title;?></h2>
+    <?php endif;?>
+    <div class="media-group-attachments">
+    <?php foreach ($attachments as $key => $attachment): ?>
+        <?php
+            $item = $attachment->item();
+        ?>
+        <div class="item resource media-group-item<?php foreach ($attachmentOptions as $attachmentOption => $defaultVal) {echo ' slide-' . $attachmentOption . '-' . ${'attachment' . ucfirst($attachmentOption)}[$key];}?>">
+            <?php if ($item):
+                $title = $this->plugin('escapeHtml')($item->displayTitle());
+                $media = $attachment->media() ?: $item->primaryMedia();
+                if ($media):
+                    if (preg_match('/alt=""/', $this->thumbnail($media, $this->thumbnailType)) == 1) {
+                        $image = $this->thumbnail($media, $this->thumbnailType, ['alt' => $title]);
+                        $linked_image = $item->linkRaw($image);
+                    }
+                    else {
+                        $image = $this->thumbnail($media, $this->thumbnailType);
+                        $linked_image = $item->linkRaw($image);
+                    }
+            ?>
+                    <figure>
+                        <?php echo $image; ?>
+                        <figcaption>
+                            <?php if ($showTitleOption == 'item_title'): ?>
+                                <h3><?php echo $item->link($item->displayTitle()); ?></h3>
+                            <?php elseif ($showTitleOption == 'file_name'): ?>
+                                <h3><?php echo $media->displayTitle(); ?></h3>
+                            <?php endif; ?>
+                            <?php if ($attachment->caption()): ?>
+                                <?php echo $attachment->caption(); ?>
+                            <?php endif; ?>
+                        </figcaption>
+                    </figure>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    </div>
+    <?php if ($groupCaption): ?>
+        <div class="media-group-caption <?php echo $groupCaptionAlignment; ?>"><?php echo $groupCaption;?></div>
+    <?php endif;?>
+</div>
+
+

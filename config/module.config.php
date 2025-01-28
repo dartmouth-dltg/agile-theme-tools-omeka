@@ -27,6 +27,7 @@
               'sectionIntroSplash' => Service\BlockLayout\SectionIntroSplashFactory::class,
               'responsiveEmbed' => Service\BlockLayout\ResponsiveEmbedFactory::class,
               'sitePromo' => Service\BlockLayout\SitePromoFactory::class,
+              'mediaGroup' => Service\BlockLayout\MediaGroupFactory::class,
           ]
       ],
       'form_elements' => [
