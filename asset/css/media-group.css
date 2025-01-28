@@ -16,6 +16,10 @@
   text-align: center;
 }
 
+.media-group-caption.center p {
+  margin 0 auto;
+}
+
 .media-group-caption.right {
   text-align: right;
 }
