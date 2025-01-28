@@ -67,7 +67,7 @@ class MediaGroup extends AbstractBlockLayout
         $groupCaptionAlignment = new Select("o:block[__blockIndex__][o:data][groupCaptionAlignment]");
         $groupCaptionAlignment->setLabel('Select Group Caption Alignment');
         $groupCaptionAlignment->setValueOptions(['left' => 'left','center' => 'center', 'right' => 'right']);        
-        $groupCaptionAlignment->setAttribute('value', $block->dataValue("groupCaptionAlignment"));
+        $groupCaptionAlignment->setAttribute('value', 'left');
 
         if ($block) {
             $title->setAttribute('value',$block->dataValue('title'));
