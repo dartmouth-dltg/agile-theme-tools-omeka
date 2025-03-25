@@ -1,0 +1,35 @@
+.media-group-attachments {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 18px;
+}
+
+.media-group-attachments figcaption {
+  font-style: italic;
+}
+
+.media-group-caption {
+  margin-top: 5px;
+}
+
+.media-group-caption.center {
+  text-align: center;
+}
+
+.media-group-caption.center p {
+  margin: 0 auto;
+}
+
+.media-group-caption.right {
+  text-align: right;
+}
+
+.media-group-caption.right p {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .media-group-attachments {
+    grid-template-columns: 100%;
+  }
+}
