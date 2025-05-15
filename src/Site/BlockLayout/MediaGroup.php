@@ -2,6 +2,7 @@
 namespace AgileThemeTools\Site\BlockLayout;
 
 use AgileThemeTools\Form\Element\RegionMenuSelect;
+use Laminas\Form\Element\Checkbox;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
 use Omeka\Api\Representation\SiteRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
@@ -69,14 +70,20 @@ class MediaGroup extends AbstractBlockLayout
         $groupCaptionAlignment->setValueOptions(['left' => 'left','center' => 'center', 'right' => 'right']);        
         $groupCaptionAlignment->setAttribute('value', 'left');
 
+        $useAttachmentInfo = new Checkbox("o:block[__blockIndex__][o:data][useAttachmentInfo]");
+        $useAttachmentInfo->setLabel('Use Attachment Info');
+        $useAttachmentInfo->setAttribute('value', '1');
+
         if ($block) {
             $title->setAttribute('value',$block->dataValue('title'));
             $groupCaption->setAttribute('value', $block->dataValue('groupCaption'));
             $groupCaptionAlignment->setAttribute('value', $block->dataValue('groupCaptionAlignment'));
+            $useAttachmentInfo->setAttribute('value', $block->dataValue('useAttachmentInfo'));
         }
 
         $html = $view->formRow($title);
         $html .= $view->blockAttachmentsForm($block);
+        $html .= $view->formRow($useAttachmentInfo);
         $html .= '<a href="#" class="collapse" aria-label="collapse"><h4>' . $view->translate('Media Group Options'). '</h4></a>';
         $html .= '<div class="collapsible">';
         $html .= $view->formRow($groupCaption);
@@ -102,6 +109,7 @@ class MediaGroup extends AbstractBlockLayout
         $renderValues = [
             'block' => $block,
             'attachments' => $attachments,
+            'useAttachmentInfo' => $block->dataValue('useAttachmentInfo', false),
             'title' => $data['title'],
             'groupCaption' => $data['groupCaption'],
             'groupCaptionAlignment' => $block->dataValue('groupCaptionAlignment', 'left'),
