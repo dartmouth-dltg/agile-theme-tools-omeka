@@ -1,11 +1,15 @@
 .media-group-attachments {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 18px;
+  grid-gap: 24px;
 }
 
 .media-group-attachments figcaption {
   font-style: italic;
+}
+
+.media-group-attachments h3 {
+  font-size: 1.1em;
 }
 
 .media-group-caption {
