@@ -69,7 +69,7 @@ class SlideshowHelper {
   }
 
   public function attachment_scale_values($scaleValues, $key) {
-    $scaleValues = preg_filter('/^/', 'transform: scale(', $scaleValues);
+    $scaleValues = preg_filter('/^/', 'transform: scale(', $scaleValues ?? '');
     return preg_filter('/$/', '); transform-origin: ' . str_replace('-',' ', $this->attachmentPositionValue[$key]) . ';', $scaleValues);
   }
 

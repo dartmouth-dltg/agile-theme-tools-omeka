@@ -53,7 +53,7 @@ class Poster extends AbstractBlockLayout
 
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $region = new RegionMenuSelect();
@@ -96,9 +96,9 @@ class Poster extends AbstractBlockLayout
         $attachments = $block->attachments();
 
         $data = $block->data();
-        list($scope,$region) = explode(':',$data['region']);
-        list($schemeScope,$scheme) = explode(':',$data['scheme']);
-        list($treatmentScope,$textTreatment) = explode(':',$data['treatment']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
+        list($schemeScope,$scheme) = explode(':', $data['scheme'] ?? '');
+        list($treatmentScope,$textTreatment) = explode(':', $data['treatment'] ?? '');
 
         $thumbnailType = $region == 'splash' ? 'splash' : 'large'; // Note “splash” is a custom image size and needs to be configured in config/local.config.php
 

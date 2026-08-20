@@ -55,7 +55,7 @@ class SectionIntroSplash extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $title = new Text("o:block[__blockIndex__][o:data][title]");
@@ -126,7 +126,7 @@ class SectionIntroSplash extends AbstractBlockLayout
 
         $data = $block->data();
         $showTitleOption = $block->dataValue('show_title_option', 'item_title');
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
 
         $render_values = [
             'block' => $block,

@@ -14,7 +14,7 @@ class SlideshowFactory implements FactoryInterface
      * @param ContainerInterface $serviceLocator
      * @return Slideshow
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         $htmlPurifier = $serviceLocator->get('Omeka\HtmlPurifier');
         $formElementManager = $serviceLocator->get('FormElementManager');

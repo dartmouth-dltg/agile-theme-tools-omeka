@@ -53,7 +53,7 @@ class MediaGroup extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $title = new Text("o:block[__blockIndex__][o:data][title]");
@@ -104,7 +104,7 @@ class MediaGroup extends AbstractBlockLayout
         $attachments = $block->attachments();
 
         $data = $block->data();
-        list($scope, $region) = explode(':', $data['region']);
+        list($scope, $region) = explode(':', $data['region'] ?? '');
 
         $renderValues = [
             'block' => $block,

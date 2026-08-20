@@ -16,7 +16,7 @@ class RepresentativeImageFactory implements FactoryInterface
      * @param ContainerInterface $serviceLocator
      * @return RepresentativeImage
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, ?array $options = null)
     {
         $htmlPurifier = $serviceLocator->get('Omeka\HtmlPurifier');
         $formElementManager = $serviceLocator->get('FormElementManager');

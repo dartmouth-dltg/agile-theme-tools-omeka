@@ -45,7 +45,7 @@ class Quotation extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $textarea = new Textarea("o:block[__blockIndex__][o:data][quotation]");

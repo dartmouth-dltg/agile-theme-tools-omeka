@@ -52,7 +52,7 @@ class Callout extends AbstractBlockLayout
 
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $region = new RegionMenuSelect();
@@ -96,7 +96,7 @@ class Callout extends AbstractBlockLayout
     {
 
         $data = $block->data();
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         $thumbnailType = $region == 'splash' ? 'splash' : 'large'; // Note “splash” is a custom image size and needs to be configured in config/local.config.php
 
         return $view->partial('common/block-layout/callout', [

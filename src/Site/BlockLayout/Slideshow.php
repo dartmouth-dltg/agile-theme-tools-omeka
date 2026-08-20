@@ -54,7 +54,7 @@ class Slideshow extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $title = new Text("o:block[__blockIndex__][o:data][title]");
@@ -112,7 +112,7 @@ class Slideshow extends AbstractBlockLayout
 
         $data = $block->data();
         $showTitleOption = $block->dataValue('show_title_option', 'item_title');
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         $allowedMediaTypes = ['image', 'pdf'];
         $image_attachments = [];
         $audio_attachment = null;

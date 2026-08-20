@@ -46,7 +46,7 @@ class ResponsiveEmbed extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $textarea = new Textarea("o:block[__blockIndex__][o:data][html]");
@@ -96,7 +96,7 @@ class ResponsiveEmbed extends AbstractBlockLayout
         $editedEmbed = preg_replace('/height="\d+"/','', $editedEmbed);
         $editedEmbed = preg_replace('/style="[^"]*"/','', $editedEmbed);
         
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         return $view->partial(
             'common/block-layout/responsive-embed',
             [
