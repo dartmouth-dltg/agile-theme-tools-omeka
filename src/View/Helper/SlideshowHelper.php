@@ -1,13 +1,11 @@
 <?php
 namespace AgileThemeTools\View\Helper;
 
-use AgileThemeTools\Form\Element\RegionMenuSelect;
 use Omeka\Api\Representation\SitePageBlockRepresentation;
 use Omeka\File\ThumbnailManager;
 use Laminas\Form\Element\Number;
 use Laminas\Form\Element\Select;
 use Laminas\View\Renderer\PhpRenderer;
-use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * A helper class to collect and render slideshow attachment
@@ -36,7 +34,13 @@ class SlideshowHelper {
   ];
   const ATTACHMENT_OPTIONS = ['size' => 0, 'fit' => 1, 'position' => 1];
 
-  public function __construct($thumbnailManager) {
+  /** @var array<string, string> */
+  protected array $thumbnailObjectSizes;
+
+  /** @var array<string, array<int, string>> keyed by option name */
+  protected array $attachmentValues = [];
+
+  public function __construct(ThumbnailManager $thumbnailManager) {
     $this->thumbnailObjectSizes = $thumbnailManager->getTypes();
   }
 
@@ -57,26 +61,28 @@ class SlideshowHelper {
   }
 
   public function attachment_values_init() {
-    foreach ($this->attachment_options() as $option => $defaultVal) {
-      $this->{'attachment' . ucfirst($option) . 'Value'} = [];
+    foreach (array_keys($this->attachment_options()) as $option) {
+      $this->attachmentValues[$option] = [];
     }
   }
 
   public function attachment_values(SitePageBlockRepresentation $block, $key) {
     foreach ($this->attachment_options() as $option => $defaultVal) {
-      array_push($this->{'attachment' . ucfirst($option) . 'Value'}, $this->{'thumbnail_' . $option . '_options'}()[$block->dataValue('attachment_' . $option . '_select_option_' . $key, $defaultVal)]);
+      $selected = $block->dataValue('attachment_' . $option . '_select_option_' . $key, $defaultVal);
+      $this->attachmentValues[$option][] = $this->{'thumbnail_' . $option . '_options'}()[$selected];
     }
   }
 
   public function attachment_scale_values($scaleValues, $key) {
+    $position = str_replace('-', ' ', $this->attachmentValues['position'][$key]);
     $scaleValues = preg_filter('/^/', 'transform: scale(', $scaleValues ?? '');
-    return preg_filter('/$/', '); transform-origin: ' . str_replace('-',' ', $this->attachmentPositionValue[$key]) . ';', $scaleValues);
+    return preg_filter('/$/', '); transform-origin: ' . $position . ';', $scaleValues);
   }
 
   public function render_values() {
     $render_values = [];
-    foreach ($this->attachment_options() as $option => $defaultVal) {
-      $render_values['attachment' . ucfirst($option)] = $this->{'attachment' . ucfirst($option) . 'Value'};
+    foreach ($this->attachmentValues as $option => $values) {
+      $render_values['attachment' . ucfirst($option)] = $values;
     }
     return $render_values;
   }

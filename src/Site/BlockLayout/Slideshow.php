@@ -28,6 +28,7 @@ class Slideshow extends AbstractBlockLayout
      * @var FormElementManager
      */
     protected $formElementManager;
+    protected SlideshowHelper $slideshowHelper;
 
     public function __construct(HtmlPurifier $htmlPurifier, FormElementManager $formElementManager, ThumbnailManager $thumbnailManager)
     {
