@@ -104,18 +104,18 @@ class MediaGroup extends AbstractBlockLayout
         $attachments = $block->attachments();
 
         $data = $block->data();
-        list($scope, $region) = explode(':', $data['region'] ?? '');
-
+        list($scope, $region) = array_pad(explode(':', $data['region'] ?? '', 2), 2, null);
+        
         $renderValues = [
             'block' => $block,
             'attachments' => $attachments,
             'useAttachmentInfo' => $block->dataValue('useAttachmentInfo', false),
-            'title' => $data['title'],
-            'groupCaption' => $data['groupCaption'],
+            'title' => $data['title'] ?? '',
+            'groupCaption' => $data['groupCaption'] ?? '',
             'groupCaptionAlignment' => $block->dataValue('groupCaptionAlignment', 'left'),
             'blockId' => $block->id(),
-            'regionClass' => 'region-' . $region,
-            'targetID' => '#' . $region,
+            'regionClass' => $region ? 'region-' . $region : '',
+            'targetID' => $region ? '#' . $region : '',
             'thumbnailType' => $block->dataValue('thumbnail_type', 'medium')
         ];
 
