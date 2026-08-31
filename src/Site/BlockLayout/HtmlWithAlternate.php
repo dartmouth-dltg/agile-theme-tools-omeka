@@ -27,6 +27,11 @@ class HtmlWithAlternate extends AbstractBlockLayout
      * @var FormElementManager
      */
     protected $formElementManager;
+    protected AvailableLanguagesHelper $availableLanguages;
+    protected string $default_language;
+    protected array $alternateLanguageList;
+    protected string $type_default;
+    protected array $alternateTypeList;
 
     public function __construct(HtmlPurifier $htmlPurifier, FormElementManager $formElementManager)
     {
