@@ -43,7 +43,19 @@
               'factories' => [
                   'SectionManager' => Service\Controller\SectionManagerFactory::class,
               ],
-          ]
+          ],
+      'view_helpers' => [
+          'delegators' => [
+              // Delegators are keyed by the resolved canonical service name,
+              // not the "serverUrl"/"ServerUrl" alias, or Laminas\ServiceManager
+              // silently never applies them (see ServiceManager::doCreate()).
+              // Every force_canonical URL (Omeka\View\Helper\Url::__invoke())
+              // funnels through this single helper.
+              \Laminas\View\Helper\ServerUrl::class => [
+                  Service\ViewHelper\ServerUrlPortDelegatorFactory::class,
+              ],
+          ],
+      ],
  /*         'router' => [
               'routes' => [
                   'add-page-action' => [
