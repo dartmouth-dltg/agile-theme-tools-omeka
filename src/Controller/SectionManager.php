@@ -23,6 +23,25 @@ class SectionManager extends AbstractActionController {
     protected $template_path;
     protected $pageIndex;
 
+    protected static ?\WeakMap $blockPageMeta = null;
+
+    /**
+     * Associates page title/url metadata with a block representation without
+     * creating dynamic properties on it (deprecated as of PHP 8.2).
+     */
+    public static function setBlockPageMeta(SitePageBlockRepresentation $block, $pageTitle, $pageUrl)
+    {
+        if (self::$blockPageMeta === null) {
+            self::$blockPageMeta = new \WeakMap();
+        }
+        self::$blockPageMeta[$block] = ['page_title' => $pageTitle, 'page_url' => $pageUrl];
+    }
+
+    public static function getBlockPageMeta(SitePageBlockRepresentation $block)
+    {
+        return self::$blockPageMeta[$block] ?? null;
+    }
+
     function __construct(Manager $api, HtmlPurifier $htmlPurifier,FormElementManager $formElementManager, $siteSlug, SiteRepresentation $site) {
         $this->api = $api;
         $this->htmlPurifier = $htmlPurifier;
@@ -133,8 +152,7 @@ class SectionManager extends AbstractActionController {
                 $childPageData['o:blocks-by-layout'] = [];
 
                 foreach($childPageRepresentation->blocks() as $block) {
-                    $block->page_title = $childPageData['o:title'];
-                    $block->page_url = $childPageData['o:url'];
+                    self::setBlockPageMeta($block, $childPageData['o:title'], $childPageData['o:url']);
 
                     $serializedBlockInfo = $block->jsonSerialize();
                     $serializedBlockInfo['page_title'] = $childPageData['o:title'];

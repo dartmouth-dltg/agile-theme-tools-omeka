@@ -22,8 +22,9 @@ $caption = $attachment->caption();
     <div class="item resource">
         <?php if ($media): ?>
             <figure>
-                <?php if (isset($this->block->page_title) && isset($this->block->page_url)): ?>
-                  <?php printf('<a href="%s" title="Visit %s">%s</a>',$this->block->page_url, $this->block->page_title, $image);  ?>
+                <?php $blockPageMeta = \AgileThemeTools\Controller\SectionManager::getBlockPageMeta($this->block); ?>
+                <?php if ($blockPageMeta): ?>
+                  <?php printf('<a href="%s" title="Visit %s">%s</a>',$blockPageMeta['page_url'], $blockPageMeta['page_title'], $image);  ?>
                 <?php else: ?>
                   <?php echo $linked_image; ?>
                 <?php endif; ?>
