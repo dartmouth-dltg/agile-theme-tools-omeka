@@ -38,17 +38,29 @@ class Module extends AbstractModule
             '*',
             'view_helper.thumbnail.attribs',
             function (Event $event) {
-                $media = $event->getParam('primaryMedia');
-                if (!$media) {
-                    return;
+                $attribs = $event->getParam('attribs');
+
+                if (!empty($attribs['src'])) {
+                    $config = $this->getServiceLocator()->get('Config');
+                    $publicPort = $config['agile_theme_tools']['public_port'] ?? null;
+                    if ($publicPort && !preg_match('#^https?://[^/]+:\d+#', $attribs['src'])) {
+                        $attribs['src'] = preg_replace('#^(https?://[^/:]+)#', '$1:' . $publicPort, $attribs['src']);
+                    }
                 }
 
-                $attribs = $event->getParam('attribs');
-                
-                if (empty($attribs['alt'])) {
-                  $item = $media->item();
-                  $description = $item->value('dcterms:description');
-                  $attribs['alt'] = !empty($description) ? htmlspecialchars(strip_tags($description)) : $media->displayTitle();
+                $representation = $event->getParam('representation');
+                if ($representation instanceof MediaRepresentation) {
+                    $media = $representation;
+                } elseif ($representation && method_exists($representation, 'primaryMedia')) {
+                    $media = $representation->primaryMedia();
+                } else {
+                    $media = null;
+                }
+
+                if ($media && empty($attribs['alt'])) {
+                    $item = $media->item();
+                    $description = $item->value('dcterms:description');
+                    $attribs['alt'] = !empty($description) ? htmlspecialchars(strip_tags($description)) : $media->displayTitle();
                 }
 
                 $event->setParam('attribs', $attribs);

@@ -27,6 +27,11 @@ class HtmlWithAlternate extends AbstractBlockLayout
      * @var FormElementManager
      */
     protected $formElementManager;
+    protected AvailableLanguagesHelper $availableLanguages;
+    protected string $default_language;
+    protected array $alternateLanguageList;
+    protected string $type_default;
+    protected array $alternateTypeList;
 
     public function __construct(HtmlPurifier $htmlPurifier, FormElementManager $formElementManager)
     {
@@ -76,7 +81,7 @@ class HtmlWithAlternate extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $textareaTitle = new Text("o:block[__blockIndex__][o:data][html_title]");

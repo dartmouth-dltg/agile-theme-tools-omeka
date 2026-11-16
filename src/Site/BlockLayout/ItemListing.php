@@ -57,7 +57,7 @@ class ItemListing extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-        SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+        ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $title = new Text("o:block[__blockIndex__][o:data][title]");
@@ -119,7 +119,7 @@ class ItemListing extends AbstractBlockLayout
 
         $data = $block->data();
         $thumbnailType = $block->dataValue('thumbnail_type', 'square');
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
 
         return $view->partial('common/block-layout/item-listing', [
             'block' => $block,

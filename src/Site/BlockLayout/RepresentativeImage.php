@@ -35,7 +35,7 @@ class RepresentativeImage extends AbstractBlockLayout
 
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $region = new RegionMenuSelect();
@@ -68,7 +68,7 @@ class RepresentativeImage extends AbstractBlockLayout
         }
 
         $data = $block->data();
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         $thumbnailType = $region == 'splash' ? 'splash' : 'large'; // Note “splash” is a custom image size and needs to be configured in config/local.config.php
         
         // Title and Url of representative images are contextual and set in SeectionPageListing block layout.

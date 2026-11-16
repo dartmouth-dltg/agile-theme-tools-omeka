@@ -47,7 +47,7 @@ class Excerpt extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $textarea = new Textarea("o:block[__blockIndex__][o:data][html]");
@@ -81,7 +81,7 @@ class Excerpt extends AbstractBlockLayout
     public function render(PhpRenderer $view, SitePageBlockRepresentation $block) {
 
         $data = $block->data();
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         return $view->partial(
             'common/block-layout/excerpt.phtml',
             [

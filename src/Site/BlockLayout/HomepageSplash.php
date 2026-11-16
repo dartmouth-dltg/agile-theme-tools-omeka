@@ -27,6 +27,7 @@ class HomepageSplash extends AbstractBlockLayout
      * @var FormElementManager
      */
     protected $formElementManager;
+    protected SlideshowHelper $slideshowHelper;
 
     public function __construct(HtmlPurifier $htmlPurifier, FormElementManager $formElementManager, ThumbnailManager $thumbnailManager)
     {
@@ -55,7 +56,7 @@ class HomepageSplash extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $title = new Text("o:block[__blockIndex__][o:data][title]");
@@ -128,7 +129,7 @@ class HomepageSplash extends AbstractBlockLayout
 
         $data = $block->data();
         $showTitleOption = $block->dataValue('show_title_option', 'item_title');
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         // $thumbnailType = $region == 'splash' ? 'splash' : 'large'; // Note “splash” is a custom image size and needs to be configured in config/local.config.php
 
         $render_values = [

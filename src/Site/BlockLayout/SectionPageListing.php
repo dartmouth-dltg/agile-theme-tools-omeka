@@ -71,7 +71,7 @@ class SectionPageListing extends AbstractBlockLayout
 
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null)
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null)
     {
 
         $sectionsMenu = new SectionsMenuSelect();
@@ -147,7 +147,7 @@ class SectionPageListing extends AbstractBlockLayout
 
         $data = $block->data();
         $pages = $this->sectionManager->getPagesBySection($data['section'],!empty($data['itemCount']) ? $data['itemCount'] : null);
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
 
         foreach ($pages as &$page) {
             $page['embeddedBlocks'] = [];

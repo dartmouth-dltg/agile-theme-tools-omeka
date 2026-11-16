@@ -47,7 +47,7 @@ class SitePromo extends AbstractBlockLayout
     }
 
     public function form(PhpRenderer $view, SiteRepresentation $site,
-                         SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+                         ?SitePageRepresentation $page = null, ?SitePageBlockRepresentation $block = null
     ) {
 
         $textarea = new Textarea("o:block[__blockIndex__][o:data][html]");
@@ -103,7 +103,7 @@ class SitePromo extends AbstractBlockLayout
 
         $data = $block->data();
         $link_and_title = explode("|", $data['show_site_select_option']);
-        list($scope,$region) = explode(':',$data['region']);
+        list($scope,$region) = explode(':', $data['region'] ?? '');
         $siteBaseUrl = $view->basePath() . '/s/';
         return $view->partial(
             'common/block-layout/site-promo',
